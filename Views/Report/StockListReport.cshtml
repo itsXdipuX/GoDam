@@ -1,0 +1,55 @@
+﻿@model IEnumerable<GoDam.ViewModels.ProductStockViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1>Product Stock</h1>
+
+    <form asp-action="StockListReport" method="get" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        <div class="input-group" style="margin-left:66px; margin-top:44px;">
+            <input type="text" name="searchKey" class="form-control bg-white border-0 small" placeholder="Search for..."
+                   aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+    <div class="container-md" style="margin-left:52px; padding:30px;">
+        <table class="table table-bordered" style="margin-top:-10px; width:60%;">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        Product Name
+                    </th>
+                    <th>
+                        Quantiy
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+
+                        <td class="text-center">
+                            <a href="/Products/Details/@item.ProductID" class="btn btn-info btn-circle btn-sm"><i class="fas fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

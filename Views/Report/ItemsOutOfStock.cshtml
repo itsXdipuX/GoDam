@@ -1,0 +1,70 @@
+﻿@model IEnumerable<GoDam.ViewModels.ItemDetailsViewModel>
+
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/layout.cshtml"; }
+
+<div class="container-fluid">
+    <h1>Items running Out Of Stock</h1>
+
+    @*<form asp-action="ItemsOutOfStock" method="get" class="d-flex flex-row justify-content-end">
+            <select name="filterOption" class="form-control">
+                <option value="Name">Name by asc order</option>
+                <option value="qty">Quantity by desc order</option>
+                <option value="date">Stocked Date by desc order</option>
+            </select>
+            <input type="submit" value="search" class="btn btn-info ml-1" />
+        </form>*@
+
+    <form asp-action="ItemsOutOfStock" method="get" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100">
+        <div class="input-group" style="margin-left:66px; margin-top:44px;">
+            <select name="filterOption" class="form-control">
+                <option value="Name">Name by asc order</option>
+                <option value="qty">Quantity by desc order</option>
+                <option value="date">Stocked Date by desc order</option>
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+    <div class="container-md" style="margin-left:52px; padding:30px;">
+        <table class="table table-hover table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductName)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Quantity)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.PurchaseDate)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PurchaseDate)
+        </td>
+
+    </tr>}
+            </tbody>
+        </table>
+
+        </div>
+
+
+    </div>

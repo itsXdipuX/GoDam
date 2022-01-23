@@ -1,0 +1,42 @@
+﻿@model IEnumerable<GoDam.ViewModels.InactiveCustomerViewModel>
+@{
+    ViewData["Title"] = "Inactive Customer";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h4>List of Customers who have not Purchased any item in last 31 days</h4>
+    <table class="table table-hover table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+
+                <th>
+                    CustomerID
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Last purchased on
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastPurchasedON)
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>

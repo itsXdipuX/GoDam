@@ -1,0 +1,93 @@
+﻿@model IEnumerable<GoDam.ViewModels.CustomerPurchaseViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between mb-4 mt-5 align-items-center">
+        <h4>Customer Purchase details in past 31 days</h4>
+        <div class="d-flex flex-row align-items-center">
+            <form asp-action="CustomerPurchaseReport" method="get" class="d-flex flex-row justify-content-end">
+                <select name="id" class="form-control" asp-items="ViewBag.CustomerID"></select>
+                <input type="submit" value="search" class="btn btn-info ml-1" />
+            </form>
+        </div>
+    </div>
+
+    @if (Model.ToList().Count != 0)
+    {
+        <table class="table table-hover table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        Sales Id
+                    </th>
+                    <th>
+                        CustomerID
+                    </th>
+                    <th>
+                        Bill No
+                    </th>
+                    <th>
+                        Item Id
+                    </th>
+                    <th>
+                        Item Name
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        DaysBeforePurchsed
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SalesID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BillNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DaysBeforePurchsed)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            No items available. Please search again from dropdown above!
+        </div>
+
+    }
+
+</div>

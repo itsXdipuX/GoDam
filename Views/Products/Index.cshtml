@@ -1,0 +1,58 @@
+﻿@model IEnumerable<GoDam.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+<div class="container-fluid">
+    <h1>Index</h1>
+
+    <p>
+        <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i> Add Product</a>
+    </p>
+    <div class="container-md" style="margin-left:205px; padding:30px;">
+        <table class="table table-bordered table-striped table-responsive-md" style="width:70%;">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        Product Name
+                    </th>
+                    <th>
+                        Manufacture Date
+                    </th>
+                    <th>
+                        Expiry Date
+                    </th>
+                    <th>
+                        Category
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
+                        <td>
+                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.MFDate))
+                        </td>
+                        <td>
+                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.ExpDate))
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cat.CategoryName)
+                        </td>
+                        <td class="text-center">
+                            <a asp-action="Edit" asp-route-id="@item.ProductID" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-edit"></i></a> |
+                            <a asp-action="Details" asp-route-id="@item.ProductID" class="btn btn-info btn-circle btn-sm"><i class="fas fa-info-circle"></i></a> |
+                            <a asp-action="Delete" asp-route-id="@item.ProductID" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

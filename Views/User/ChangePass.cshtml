@@ -1,0 +1,45 @@
+﻿@model IEnumerable<GoDam.ViewModels.UserViewModel>
+@{
+    ViewData["Title"] = "Admin - Change Password";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+<div class="container-fluid">
+    <h1>Users</h1>
+
+    <p>
+        Change Password
+    </p>
+    <div class="col-md-10">
+        <form asp-action="ChangePass" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @foreach (var item in Model)
+            {
+                @*@Html.DisplayFor(modelItem => item.Email)*@
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label for="Email" class="control-label">Email</label>
+                        <input type="Email" value="@Html.DisplayFor(modelItem => item.Email)" class="form-control" readonly />
+                    </div>
+                </div>
+            }
+            @*<div class="form-group">
+            <label class="control-label">Email</label>
+            <input value="@Html.DisplayFor(modelItem => item.Email)" readonly />
+        </div>*@
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label for="NewPassword">NewPassword</label>
+                    <input name="NewPassword" required type="text" class="form-control"
+                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           @*pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,}$" *@ />
+                </div>
+                <small style="color:red">
+                    *It must contain 6 or more characters that are of at least one number, and one uppercase and lowercase letter and one special letter.
+                </small>
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary">Update password</button>
+            </div>
+        </form>
+    </div>
+</div>

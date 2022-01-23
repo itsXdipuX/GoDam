@@ -1,0 +1,43 @@
+﻿@model GoDam.Models.Sales
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1>Edit</h1>
+
+    <h4>Sales</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="SalesID" />
+                <div class="form-group">
+                    <label class="control-label">Bill Number</label>
+                    <input asp-for="BillNumber" class="form-control" />
+                    <span asp-validation-for="BillNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Sales Date</label>
+                    <input asp-for="SalesDate" class="form-control" />
+                    <span asp-validation-for="SalesDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Customer Name</label>
+                    <select asp-for="CustomerID" class="form-control" asp-items="ViewBag.CustomerID"></select>
+                    <span asp-validation-for="CustomerID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>

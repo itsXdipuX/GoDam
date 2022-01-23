@@ -1,0 +1,57 @@
+﻿@model IEnumerable<GoDam.Models.Purchase>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1>Index</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Bill Number
+                </th>
+                <th>
+                    Vendor Name
+                </th>
+                <th>
+                    Vendor Address
+                </th>
+                <th>
+                    Purchase Date
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BillNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VendorName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VendorAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PurchaseDate)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.PurchaseID" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-edit"></i></a> |
+                        <a asp-action="Details" asp-route-id="@item.PurchaseID" class="btn btn-info btn-circle btn-sm"><i class="fas fa-info-circle"></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.PurchaseID" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

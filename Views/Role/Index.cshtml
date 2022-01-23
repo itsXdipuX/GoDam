@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1>Roles</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <div style="margin-left:80px;padding:30px;">
+    <table class="table table-bordered table-striped table-responsive-md" style="width:24%;">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                @*<th></th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    @*<td>
+                            <a asp-action="Edit" asp-route-id="@item.ProductID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.ProductID">Delete</a>
+                        </td>*@
+                </tr>
+            }
+        </tbody>
+    </table>
+        </div>
+</div>

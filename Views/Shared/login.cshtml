@@ -1,0 +1,63 @@
+﻿
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Log in">
+    <meta name="author" content="">
+    <title>Godam</title>
+    <!-- Favicon -->
+    <link rel="icon" href="~/Content/img/brand/favicon.png" type="image/png">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <!-- Icons -->
+    <link rel="stylesheet" href="~/Content/vendor/nucleo/css/nucleo.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/vendor/fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+    <!-- Argon CSS -->
+    <link rel="stylesheet" href="~/Content/css/style.css?v=1.2.0" type="text/css">
+</head>
+
+<body class="bg-default">
+    <!-- Navbar -->
+    <nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg navbar-light">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse navbar-custom-collapse collapse" id="navbar-collapse">
+                <div class="navbar-collapse-header">
+                    <div class="row">
+                        <div class="col-6 collapse-close">
+                            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-lg-none" />
+            </div>
+        </div>
+    </nav>
+    <!-- Main content -->
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <script src="~/Content/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/vendor/js-cookie/js.cookie.js"></script>
+    <script src="~/Content/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="~/Content/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+    <!-- Argon JS -->
+    <script src="~/Content/js/js.js?v=1.2.0"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

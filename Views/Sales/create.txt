@@ -1,0 +1,185 @@
+@model GoDam.ViewModel.SalesViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1>Create</h1>
+
+    <h4>Sales</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Bill Number</label>
+                    <input asp-for="Sale.BillNumber" class="form-control" />
+                    <span asp-validation-for="Sale.BillNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Sales Date</label>
+                    <input asp-for="Sale.SalesDate" class="form-control" />
+                    <span asp-validation-for="Sale.SalesDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Customer Name</label>
+                    <select asp-for="Sale.CustomerID" class="form-control" asp-items="ViewBag.CustomerID"></select>
+                </div>
+                <hr />
+                
+                <h2>Add Items</h2>
+
+                <button id="plusBtn" type="button" class="btn btn-small btn-success">+</button>
+                <button id="minusBtn" type="button" class="btn btn-small btn-danger">-</button>
+                <br />
+                <br/>
+
+                <div id="item">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="ListSalesDetails[0].ProductID" class="control-label">Product</label>
+                                <select id="productsSelectList" asp-for="ListSalesDetails[0].ProductID" class="form-control itemsSelectList" asp-items="ViewBag.ProductID"></select>
+                                    @*<option value="">Select Item</option>*@
+                                @*</select>*@
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="ListSalesDetails[0].Quantity" class="control-label">Quantity</label>
+                                <input asp-for="ListSalesDetails[0].Quantity" class="form-control" />
+                                <span asp-validation-for="ListSalesDetails[0].Quantity" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="ListSalesDetails[0].Price" class="control-label">Amount</label>
+                                <input asp-for="ListSalesDetails[0].Price" class="form-control" />
+                                <span asp-validation-for="ListSalesDetails[0].Price" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="addItems"></div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+@section JS_Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            const options = $('#productsSelectList option');
+
+            let values = $.map(options, function (option) {
+                return { value: option.value, text: option.text };
+            });
+
+            //alert(values)
+
+            const optionTags = values.map(val => {
+                //console.log(val.value)
+                return `<option value="${val.value}">${val.text}</option>`
+            })
+
+            let currentItemCount = 0;
+
+            const addItem = (i) => {
+
+                //for (let i = 1; i <= itemCount; i++) {
+                $('#addItems').append(`
+                            <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="control-label" for="ListSalesDetails[${i}].ProductID">Product</label>
+                                            <select  class="form-control productsSelectList" name="ListSalesDetails[${i}].ProductID" required>
+                                            ${optionTags.join('<br />')}
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label asp-for="ListSalesDetails[${i}].Quantity" class="control-label">Quantity</label>
+                                            <input name="ListSalesDetails[${i}].Quantity" class="form-control" required/>
+                                            <span asp-validation-for="ListSalesDetails[${i}].Quantity" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label asp-for="ListSalesDetails[${i}].Price" class="control-label">Amount</label>
+                                            <input name="ListSalesDetails[${i}].Price" class="form-control" required/>
+                                            <span asp-validation-for="ListSalesDetails[${i}].Price" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                        </div>
+                    `)
+                // }
+            }
+
+            $('#plusBtn').click(function () {
+
+                currentItemCount = currentItemCount + 1;
+                addItem(currentItemCount)
+            });
+
+            $('#minusBtn').click(function () {
+
+                if (currentItemCount > 0) {
+                    currentItemCount = currentItemCount - 1;
+
+                    //addItem(currentItemCount)
+                    $('#addItems').children().last().remove()
+                }
+            });
+
+
+            @*// fetch customer details
+                $(document).on("change", '.productsSelectList', function () {
+                let selectedVal = $(this).find(":selected").val()
+
+                if (selectedVal) {
+                    //alert($(this).find(":selected").val())
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("ItemDetails")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { id: parseInt(selectedVal) },
+                        dataType: "json",
+                        success: function (data) {
+                            //alert('Success');
+
+                            console.log(data.item)
+                            $('#itemName').text(data.item.name)
+                            $('#itemDesc').text(data.item.description)
+                            $('#itemCategory').text(data.item.category)
+                            $('#itemQty').text(data.item.quantity)
+                            // show modal
+                            $('#itemModal').modal();
+                        },
+                        error: function (e) {
+                            //alert(e);
+                            console.log(e)
+                        }
+                    });
+                }
+
+            })*@
+        });
+    </script>
+}

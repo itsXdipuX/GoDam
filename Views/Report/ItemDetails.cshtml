@@ -1,0 +1,62 @@
+﻿@model List<GoDam.ViewModels.ItemDetailsViewModel>
+
+@{ 
+    ViewData["Title"] = "Index"; 
+}
+
+<h4>Items details</h4>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model[0].ProductName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model[0].ProductName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model[0].ProductCategory)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model[0].ProductCategory)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model[0].Quantity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model[0].Quantity)
+        </dd>
+    </dl>
+</div>
+
+
+<table class="table table-hover table-bordered table-striped">
+    <thead class="bg-info text-white">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model[0].VendorName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model[0].PricePerPiece)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.VendorName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PricePerPiece)
+    </td>
+
+</tr>}
+    </tbody>
+</table>
+<div>
+    <a asp-action="StockReport">Back to List</a>
+</div>

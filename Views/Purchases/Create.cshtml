@@ -1,0 +1,182 @@
+﻿@model GoDam.ViewModel.PurchaseViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1>Create</h1>
+
+    <h4>Purchase</h4>
+    <hr />
+    <div class="row">
+
+        <div class="col-md-10">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Bill Number</label>
+                            <input asp-for="Purchase.BillNumber" class="form-control" />
+                            <span asp-validation-for="Purchase.BillNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Vendor Name</label>
+                            <input asp-for="Purchase.VendorName" class="form-control" />
+                            <span asp-validation-for="Purchase.VendorName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Vendor Address</label>
+                            <input asp-for="Purchase.VendorAddress" class="form-control" />
+                            <span asp-validation-for="Purchase.VendorAddress" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Purchase Date</label>
+                            <input asp-for="Purchase.PurchaseDate" class="form-control" />
+                            <span asp-validation-for="Purchase.PurchaseDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <h4>Add Items</h4>
+
+                <button id="plusBtn" type="button" class="btn btn-small btn-success"><i class="fas fa-plus"></i>  Add Row</button>
+                <button id="minusBtn" type="button" class="btn btn-small btn-danger"><i class="fas fa-minus"></i>  Remove Row</button>
+                <br />
+                <br />
+                <div id="item">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="ListPurchaseDetails[0].ProductID" class="control-label">Product</label>
+                                <select id="productsSelectList" asp-for="ListPurchaseDetails[0].ProductID" class="form-control" asp-items="ViewBag.ProductID"></select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="ListPurchaseDetails[0].Quantity" class="control-label"></label>
+                                <input asp-for="ListPurchaseDetails[0].Quantity" class="form-control" id="quantity"/>
+                                <span asp-validation-for="ListPurchaseDetails[0].Quantity" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="ListPurchaseDetails[0].Amount" class="control-label"></label>
+                                <input asp-for="ListPurchaseDetails[0].Amount" class="form-control" id="price"/>
+                                <span asp-validation-for="ListPurchaseDetails[0].Amount" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="ListPurchaseDetails[0].LineTotal" class="control-label"></label>
+                                <input asp-for="ListPurchaseDetails[0].LineTotal" class="form-control" id="totalPrice"/>
+                                <span asp-validation-for="ListPurchaseDetails[0].LineTotal" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="addItems"></div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+@section JS_Scripts{
+    <script type="text/javascript">$(document).ready(function () {
+
+            const options = $('#productsSelectList option');
+
+            let values = $.map(options, function (option) {
+                return { value: option.value, text: option.text };
+            });
+
+            //alert(values)
+
+            const optionTags = values.map(val => {
+                //console.log(val.value)
+                return `<option value="${val.value}">${val.text}</option>`
+            })
+
+            let currentItemCount = 0;
+
+            const addItem = (i) => {
+
+                //for (let i = 1; i <= itemCount; i++) {
+                        $('#addItems').append(`
+                        <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="control-label" for="ListPurchaseDetails[${i}].ProductID">Product</label>
+                                        <select  class="form-control" name="ListPurchaseDetails[${i}].ProductID" data-val="true" data-val-required="The ProductID field is required." >
+                                        ${optionTags.join('<br />')}
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label asp-for="ListPurchaseDetails[${i}].Quantity" class="control-label">Quantity</label>
+                                        <input name="ListPurchaseDetails[${i}].Quantity" class="form-control" id="quantity"/>
+                                        <span asp-validation-for="ListPurchaseDetails[${i}].Quantity" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label asp-for="ListPurchaseDetails[${i}].Amount" class="control-label">Amount</label>
+                                        <input name="ListPurchaseDetails[${i}].Amount" class="form-control" id="price"/>
+                                        <span asp-validation-for="ListPurchaseDetails[${i}].Amount" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label asp-for="ListPurchaseDetails[${i}].LineTotal" class="control-label">LineTotal</label>
+                                        <input name="ListPurchaseDetails[${i}].LineTotal" class="form-control" id="totalPrice"/>
+                                        <span asp-validation-for="ListPurchaseDetails[${i}].LineTotal" class="text-danger"></span>
+                                    </div>
+                                </div>
+                    </div>
+                `)
+               // }
+            }
+
+            $('#plusBtn').click(function () {
+
+                currentItemCount = currentItemCount + 1;
+                addItem(currentItemCount)
+            });
+
+            $('#minusBtn').click(function () {
+
+                if (currentItemCount > 0) {
+                    currentItemCount = currentItemCount - 1;
+
+                    //addItem(currentItemCount)
+                    $('#addItems').children().last().remove()
+                }
+            });
+        });</script>
+
+    @*<script type="text/javascript">
+        $("#quantity,#price").keyup(function () {
+            $('#totalPrice').val($('#quantity').val() * $('#price').val());
+        });
+    </script>*@
+}
